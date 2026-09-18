@@ -51,6 +51,9 @@ jobs:
       - name: Apply migrations
         run: npx prisma migrate deploy
 
+      - name: Generate Next.js route types
+        run: npx next typegen
+
       - name: Type check
         run: npm run typecheck
 

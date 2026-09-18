@@ -39,7 +39,7 @@ export const viewport = {
   maximumScale: 5,
   viewportFit: 'cover',
 };
-export default async function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const chatwaySetting = await db.platformSetting.findUnique({
     where: { key: 'chatway_widget_code' },
   });
