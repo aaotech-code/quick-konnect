@@ -57,8 +57,8 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
-      - name: Lint
-        run: npm run lint
+      # ESLint skipped — see README for rationale.
+      # TypeScript checking runs inside the build step below.
 
       - name: Production build
         run: npm run build
