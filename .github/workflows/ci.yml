@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app_dev_password
+          POSTGRES_DB: trusted_services
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+
+    env:
+      DATABASE_URL: postgresql://app:app_dev_password@localhost:5432/trusted_services?schema=public
+      REDIS_URL: redis://localhost:6379
+      SESSION_SECRET: ci_only_secret_at_least_32_characters_long_xxxxxxxx
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Apply migrations
+        run: npx prisma migrate deploy
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Production build
+        run: npm run build
+
+      - name: Forbid env-var control of Protected Payment
+        run: |
+          if grep -rE "process\.env\.(PROTECTED_PAYMENT|PAYMENT_ENABLED|ESCROW)" src/ prisma/ 2>/dev/null; then
+            echo "::error::Protected Payment must be controlled via DB platform_settings, not env vars."
+            exit 1
+          fi
+          echo "OK: no env-var override of Protected Payment."

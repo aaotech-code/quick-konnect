@@ -39,3 +39,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.env
+
+/public/uploads/
+.env.local
+.env*.local
+node_modules/
+.next/
+out/
+build/
+prisma/*.db
+public/uploads/*
+!public/uploads/.gitkeep
+!public/uploads/**/.gitkeep
+*.log
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+coverage/
+.turbo/

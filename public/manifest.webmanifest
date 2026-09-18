@@ -1,0 +1,36 @@
+{
+  "name": "Quick-Konnect - Find Trusted Professionals",
+  "short_name": "Quick-Konnect",
+  "description": "Trusted marketplace for local services in Nigeria. Verified providers, real reviews, quotes you can compare.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05070b",
+  "theme_color": "#05070b",
+  "scope": "/",
+  "categories": [
+    "business",
+    "productivity",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "/icon",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
