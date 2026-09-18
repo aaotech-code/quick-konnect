@@ -2,18 +2,9 @@ import type { Metadata } from "next";
 import { NotificationListener } from '@/components/marketplace/NotificationListener';
 import { PWARegistrar } from '@/components/marketplace/PWARegistrar';
 import { db } from '@/server/db/client';
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: 'Quick-Konnect - Find Trusted Local Professionals',
@@ -30,7 +21,6 @@ export const metadata = {
     apple: '/apple-icon',
   },
 };
-
 
 export const viewport = {
   themeColor: '#05070b',
@@ -50,7 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}  {chatwayCode ? (
           <div dangerouslySetInnerHTML={{ __html: chatwayCode }} />
