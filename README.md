@@ -106,6 +106,28 @@ Open <http://localhost:3000>. Sign in with your admin credentials and visit <htt
 
 ---
 
+
+## Production Deployment
+
+See [\`DEPLOYMENT.md\`](./DEPLOYMENT.md) for the full guide to deploying on a VPS with Docker, Nginx, and HTTPS.
+
+Quick summary:
+\`\`\`bash
+# On the VPS
+git clone https://github.com/aaotech-code/quick-konnect.git
+cd quick-konnect
+cp .env.production.example .env
+nano .env   # fill in secrets
+docker compose -f docker-compose.prod.yml up -d postgres redis
+docker compose -f docker-compose.prod.yml run --rm web npx prisma migrate deploy
+docker compose -f docker-compose.prod.yml run --rm web npx prisma db seed
+docker compose -f docker-compose.prod.yml run --rm web npm run seed:admin -- you@example.com StrongPassword123
+docker compose -f docker-compose.prod.yml up -d
+bash nginx/init-ssl.sh
+\`\`\`
+
+---
+
 ## Environment Variables
 
 See `.env.example` for the full list with comments. Summary:
